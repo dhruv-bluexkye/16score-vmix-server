@@ -11,6 +11,16 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// For Vercel deployment
+if (process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    if (req.headers['x-forwarded-proto'] !== 'https') {
+      return res.redirect(`https://${req.headers.host}${req.url}`);
+    }
+    next();
+  });
+}
+
 // Swagger configuration
 const swaggerOptions = {
   definition: {
@@ -27,6 +37,10 @@ const swaggerOptions = {
         {
           url: `http://localhost:${PORT}`,
           description: 'Development server'
+        },
+        {
+          url: process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : `http://localhost:${PORT}`,
+          description: 'Production server'
         }
       ]
     },
