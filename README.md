@@ -70,7 +70,7 @@ A Node.js Express backend with MongoDB for user authentication.
    ```
 
 3. **Set Environment Variables in Vercel Dashboard:**
-   - `MONGODB_URI` - Your MongoDB Atlas connection string
+   - `MONGODB_URI` - Your MongoDB Atlas connection stringsdf
    - `JWT_SECRET` - Your JWT secret key
    - `NODE_ENV` - Set to "production"
 
