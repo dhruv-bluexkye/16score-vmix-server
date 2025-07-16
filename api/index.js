@@ -82,11 +82,16 @@ app.use(limiter);
 // MongoDB Connection
 const connectDB = async () => {
   try {
+    if (!process.env.MONGODB_URI) {
+      console.error('MONGODB_URI environment variable is not set');
+      console.log('Server will start without database connection');
+      return;
+    }
     const conn = await mongoose.connect(process.env.MONGODB_URI);
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.error('Error connecting to MongoDB:', error.message);
-    process.exit(1);
+    console.log('Server will start without database connection');
   }
 };
 
@@ -132,7 +137,9 @@ app.get('/', (req, res) => {
 app.get('/api/test', (req, res) => {
   res.json({ 
     message: 'API is working!',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development',
+    mongodb_uri_set: !!process.env.MONGODB_URI
   });
 });
 
@@ -166,6 +173,7 @@ app.get('/health', (req, res) => {
   res.json({ 
     status: 'OK',
     database: mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected',
+    mongodb_uri: process.env.MONGODB_URI ? 'Set' : 'Not Set',
     timestamp: new Date().toISOString()
   });
 });
