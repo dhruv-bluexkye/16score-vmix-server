@@ -123,6 +123,15 @@ app.get('/', (req, res) => {
   res.json({ 
     message: 'Welcome to 16score VMix Server API',
     status: 'Server is running',
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development'
+  });
+});
+
+// Test route for Vercel
+app.get('/api/test', (req, res) => {
+  res.json({ 
+    message: 'API is working!',
     timestamp: new Date().toISOString()
   });
 });
@@ -181,13 +190,8 @@ app.use('*', (req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
 
-// Start server
-const startServer = async () => {
-  await connectDB();
-  app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-    console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-  });
-};
+// Connect to MongoDB
+connectDB();
 
-startServer(); 
+// Export for Vercel
+module.exports = app; 

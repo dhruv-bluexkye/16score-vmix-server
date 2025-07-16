@@ -21,6 +21,8 @@ A Node.js Express backend with MongoDB for user authentication.
 
 ## Installation
 
+### Local Development
+
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
@@ -53,6 +55,28 @@ A Node.js Express backend with MongoDB for user authentication.
    
    # Production mode
    npm start
+   ```
+
+### Vercel Deployment
+
+1. **Install Vercel CLI**
+   ```bash
+   npm i -g vercel
+   ```
+
+2. **Deploy to Vercel**
+   ```bash
+   vercel
+   ```
+
+3. **Set Environment Variables in Vercel Dashboard:**
+   - `MONGODB_URI` - Your MongoDB Atlas connection string
+   - `JWT_SECRET` - Your JWT secret key
+   - `NODE_ENV` - Set to "production"
+
+4. **Redeploy after setting environment variables:**
+   ```bash
+   vercel --prod
    ```
 
 ## Environment Variables
