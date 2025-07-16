@@ -59,7 +59,7 @@ const swaggerOptions = {
       }
     ]
   },
-  apis: ['./routes/*.js', './server.js']
+  apis: ['./routes/*.js', './api/index.js']
 };
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
@@ -171,10 +171,10 @@ app.get('/health', (req, res) => {
 });
 
 // API routes
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/livescore', require('./routes/livescore'));
-app.use('/api/apilinks', require('./routes/apilinks'));
-app.use('/api/public', require('./routes/public'));
+app.use('/api/auth', require('../routes/auth'));
+app.use('/api/livescore', require('../routes/livescore'));
+app.use('/api/apilinks', require('../routes/apilinks'));
+app.use('/api/public', require('../routes/public'));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
